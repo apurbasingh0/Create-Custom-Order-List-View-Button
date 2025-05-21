@@ -1,0 +1,17 @@
+thead tr.first th,
+thead tr.first td {
+  position: sticky;
+  top: 0;
+  background: #eee;
+  z-index: 2000;
+}
+
+.heading-theme_bbf{
+  /*background: #e09494;*/
+}
+
+.button-icon_custom{
+  border-radius: 24px;
+  height: 24px;
+  width: 24px;
+}

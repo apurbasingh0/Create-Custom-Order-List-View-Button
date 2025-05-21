@@ -1,0 +1,125 @@
+<!--
+    @description       : Lighting web Component for order add Order products component
+    @author            : Apurba Singh, Appstrail             
+    @last modified on  : 28-04-2023
+    @last modified by  : Apurba Singh, Appstrail
+    Modifications Log 
+    Ver   Date         Author          Modification
+    1.0   28-04-2023   Apurba Singh   Initial Version
+-->
+<template>
+    <template if:true={showcomp2}>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1">
+        <div class="slds-section__title slds-theme_shade slds-truncate slds-float_right">
+            <br/>
+            <button class="slds-button slds-button_neutral" onclick={addRequestOrder}>Add Order Request</button>
+            <br/>
+        </div>
+        </div>
+    </div>
+</template>
+    <template if:true={showcomp}>
+    <!--Header-->
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <header class="slds-modal__header">
+            <h2 class="slds-modal__title slds-hyphenate">ORDER REQUEST</h2>
+            </header>
+
+        <div class="slds-modal__content slds-p-around_medium" style="padding: 10px 10px 0px 10px;">
+            <div class="slds-col slds-size_1-of-1 slds-p-vertical--x-small">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1">
+                        <div class="slds-p-horizontal_small slds-section__title slds-theme_shade slds-truncate">
+                            Order Information
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-8 slds-align-bottom slds-p-around--x-small">
+                    <lightning-input type="text" value={orderName} label="Order Name" data-field-name="OrderName" onchange={handleOrderNameChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-8 slds-align-bottom slds-p-around--x-small">
+                        <lightning-input type="date" label="PO Date" value={poDate} data-field-name="Date" onchange={handlePoDateChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-8 slds-align-bottom slds-p-around--x-small">
+                        <lightning-input type="text" label="Account" data-field-name="Account" disabled value={accountId}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1">
+                    <div class="slds-p-horizontal_small slds-section__title slds-theme_shade slds-truncate">
+                        List Of Products
+                    </div>
+                </div>
+                <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                <thead>
+                    <th class="heading-theme_bbf" scope="col">
+                        <div style="float: left;">
+                            <div class="slds-hint-parent">
+                                <!-- <button class="slds-button slds-button_icon slds-button_icon-border-filled button-icon_custom" title="Add Row" 
+                                            onclick={addProduct} disabled={disabledInput}>
+                                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+                                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Add Row</span>
+                                </button> -->
+                                <lightning-button-icon icon-name="utility:add" onclick={addProduct} alternative-text="Add"></lightning-button-icon>
+                            </div>
+                        </div>
+                    </th>
+                        <th class="heading-theme_bbf" scope="col">
+                            <div class="slds-truncate" title="Product Name">
+                                Product Name
+                            </div>
+                        </th>
+                        <th class="heading-theme_bbf" scope="col">
+                            <div class="slds-truncate" title="Quantity">
+                                Quantity
+                            </div>
+                        </th>
+                        <th>
+
+                        </th>
+                </thead>
+                    <tbody>
+                        <template for:each={products} for:item="product">
+                            <tr key={product.newproductId}>
+                                <td></td>
+                                <td>
+                                </br>
+                                    <c-custom-lookup obj-name="Product2" search-placeholder="Search Products" data-selected-name="product_r" icon-name="standard:product" default-name="" data-id={product.newproductId} onselect={handleQuantityChange}  onlookupselected={handleQuantityChange}  filter={productFiletr} > </c-custom-lookup>
+                                </td>
+                                <td>
+                                    <lightning-input name="quantity" label="" data-id={product.newproductId} type="number"  data-selected-name="quantity_r" onchange={handleQuantityChange} value={product.quantity}></lightning-input>
+                                </td>
+                                <td>
+                                </br>
+                                    <!-- <lightning-button-icon icon-name="utility:delete" onclick={deleteProduct} data-product-id={product.newproductId} alternative-text="Delete"></lightning-button-icon> -->
+                                    <lightning-button-icon icon-name="utility:delete" onclick={deleteProduct} data-id={product.newproductId} alternative-text="Delete"></lightning-button-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+    </div>
+    
+        <!--Footer-->
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleSave} disabled={disabledButton}>Save</button>
+        </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>
